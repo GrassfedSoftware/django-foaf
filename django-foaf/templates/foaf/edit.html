@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Profil de {{ user.username }}{% endblock %}
+
+{% block content %}
+<h2>Profil de {{ user.username }}</h2>
+<h3>Importer mon fichier foaf</h3>
+<form method="post" action="/foaf/import/" enctype="multipart/form-data" />
+<p>Depuis un fichier: <input type="file" name="foaf_file" /></p>
+<p>Ou depuis une url: <input type="text" size="32" name="url" /></p>
+<p><input type="submit" value="Importer" /></p>
+{% if foaf_file %}
+  <p><embed>Attention</embed>: votre fichier {{ foaf_file }}  existant sur le serveur sera ecrasé</p>
+{% endif %}
+</form>
+<h3>Ou éditer directement mon profil</h3>
+<h4>Etape 1: Identité</h4>
+<form method="post" action="/foaf/edit_profile/step_2/" />
+<table cellspacing="8" cellpadding="0">
+{% for field in form %}
+     <tr>
+    <td style="text-align:right;vertical-align:top">{{ field.label_tag }}:</td>
+    <td>{{ field }}
+    {% if field.help_text %}{{ field.help_text }}{% endif %}
+    {% if field.errors %}<span class="form_error_msg">{{ field.errors }}</span>{% endif %}
+    </td>
+    </tr>
+{% endfor %}
+</table>
+<input type="submit" value="Etape 2" >
+</form>
+{% endblock %}

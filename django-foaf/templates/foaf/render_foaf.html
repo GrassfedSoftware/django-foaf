@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block metas %}
+<link rel="meta" type="application/rdf+xml" title="FOAF" href="{{ person.foaf_file }}" />
+{% endblock %}
+
+{% block title %}Profil de {{ person.name }}{% endblock %}
+
+{% block content %}
+{% if person.image_url %}
+  <div style="float:right;margin:1em;margin-right:2em;"><img src="{{ person.image_url }}" alt="" /></div>
+{% endif %}
+<h2> Identité</h2>
+<p>{{ person.name }}</p>
+{% if person.nickname %}
+  <p>Nickname: {{ person.nickname }}</p>
+{% endif %}
+{% if person.given_name %}
+  <p>Nom courrant: {{ person.given_name }}</p>
+{% endif %}
+{% if person.surname %}
+  <p>Surnom: {{ person.surname }}</p>
+{% endif %}
+{% if person.foaf_file %}
+  <p>Fichier foaf: <a href="{{ person.foaf_file }}">{{ person.foaf_file }}</a></p>
+{% endif %}
+{% if person.homepage or person.weblog %}
+  <h2>Pages web</h2>
+{% endif %}
+{% if person.homepage %}
+  <p>Homepage: <a href="{{ person.homepage }}">{{ person.homepage }}</a></p>
+{% endif %}
+{% if person.weblog %}
+  <p>Blog: <a href="{{ person.weblog }}">{{ person.weblog }}</a></p>
+{% endif %}
+{% if person.workplaceHomepage or person.workInfoHomepage %}
+  <h2>Travail</h2>
+  {% if person.workplaceHomepage %}
+    <p>Site web: <a href="{{ person.workplaceHomepage }}">{{ person.workplaceHomepage }}</a></p>
+  {% endif %}
+  {% if person.workInfoHomepage %}
+    <p>Informations: <a href="{{ person.workInfoHomepage }}">{{ person.workInfoHomepage }}</a></p>
+  {% endif %}
+{% endif %}
+{% if person.schoolHomepage %}
+  <h2>Ecole</h2>
+  <p>Site web: <a href="{{ person.schoolHomepage }}">{{ person.schoolHomepage }}</a></p>
+{% endif %}
+{% if person.interests %}
+  <h2>Centres d'intérêt</h2>
+  <ul>
+  {% for url in person.interests %}
+      <li><a href="{{ url }}">{{ url }}</a></li>
+  {% endfor %}
+{% endif %}
+</ul>
+{% if relations %}
+  <h2>Relations</h2>
+  {% if relations.knows %}
+    <h3>Connaissances</h3>
+    <ul>
+    {% for man in relations.knows %}
+      <li><a href="/foaf/view/?url={{ man.foaf_file }}">{{ man.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% if relations.friendOf %}
+    <h3>Amis</h3>
+    <ul>
+    {% for man in relations.friendOf %}
+      <li><a href="/foaf/view/?url={{ man.foaf_file }}">{{ man.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% if relations.hasMet %}
+    <h3>A rencontré</h3>
+    <ul>
+    {% for man in relations.hasMet %}
+      <li><a href="/foaf/view/?url={{ man.foaf_file }}">{{ man.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% if relations.knowsByReputation %}
+    <h3>Connais de réputation</h3>
+    <ul>
+    {% for man in relations.knowsByReputation %}
+      <li><a href="/foaf/view/?url={{ man.foaf_file }}">{{ man.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% if relations.worksWith %}
+    <h3>Travaille avec</h3>
+    <ul>
+    {% for man in relations.worksWith %}
+      <li><a href="/foaf/view/?url={{ man.foaf_file }}">{{ man.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  {% if relations.wouldLikeToKnow %}
+    <h3>Aimerais connaitre</h3>
+    <ul>
+    {% for man in relations.wouldLikeToKnow %}
+      <li><a href="/foaf/view/?url={{ man.foaf_file }}">{{ man.name }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endif %}
+{% endblock %}

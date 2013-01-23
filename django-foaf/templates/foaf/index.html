@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block content %}
+<h2>Utilisateurs</h2>
+{% for theuser in users %}
+  <p>
+  {% if theuser.foaf_file %}
+    <a href="/foaf/{{ theuser.username }}/"><img class="icon" src="/site_media/icons/foaf.png" alt="[ Profil ]" /></a> <a href="/foaf/view/?url={{ theuser.foaf_file }}">{{ theuser.username }}</a>
+    {% ifequal theuser.id user.id %}[ <a href="/foaf/edit_profile/">Editer mon profil</a> ]{% endifequal %}
+  {% else %}
+    {{ theuser.username }}
+    {% ifequal theuser.id user.id %}[ <a href="/foaf/edit_profile/">Créer mon profil</a> ]{% endifequal %}
+  {% endif %}
+  </p>
+{% endfor %}
+{% endblock %}

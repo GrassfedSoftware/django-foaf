@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block metas %}
+<meta http-equiv="refresh" content="3; url={{ url }}" />
+{% endblock %}
+
+{% block title %}Succ&egrave;s{% endblock %}
+
+{% block content %}
+<div class="success">
+{{ message }}
+<div><a href="{{ url }}">Continuer</a></div>
+</div>
+{% endblock %}

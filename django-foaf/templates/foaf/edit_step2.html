@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Profil de {{ user.username }}{% endblock %}
+
+{% block content %}
+{% comment %}
+{{ identity_data }}
+<hr />
+{{ internal_relations }}
+<hr />
+{{ external_relations }}
+{% endcomment %}
+<h2>Editer profil étape 2: relations</h2>
+<form method="post" action="/foaf/edit_profile/post/" />
+<input type="hidden" name="identity_data" value="{{ identity_data }}" />
+<div style="float:left;margin:1em;border:1px solid #CCCCCC">
+<h3 style="text-align:center">Amis</h3>
+{% load logic_filters %}
+<table cellspacing="8" cellpadding="0">
+  <tr><th>Sélectionner</th><th>Urls de fichiers foaf</th></tr>
+  <tr>
+    <td>
+    <select multiple="multiple" id="fo" size="6" name="friendOf">
+    {% for theuser in users %}
+      {% if theuser.foaf_file %}
+        <option value="{{ theuser.foaf_file }}" {% if theuser.foaf_file|IN:internal_relations.friendOf %} selected="selected"{% endif %}>{{ theuser.name }}</option>
+      {% endif %}
+    {% endfor %}
+    </select>
+    </td>
+    <td>
+    {% for rel in external_relations.friendOf %}
+      <div><input type="text" size="42" name="friendOf_url{{ forloop.counter }}" value="{{ rel }}" /></div>
+    {% endfor %}
+    </td>
+  </tr>
+</table>
+</div>
+<div style="float:left;margin:1em;border:1px solid #CCCCCC">
+<h3 style="text-align:center">Travaille avec</h3>
+<table cellspacing="8" cellpadding="0">
+  <tr><th>Sélectionner</th><th>Urls de fichiers foaf</th></tr>
+  <tr>
+    <td>
+    <select multiple="multiple" size="6" name="worksWith">
+    {% for theuser in users %}
+      {% if theuser.foaf_file %}
+        <option value="{{ theuser.foaf_file }}" {% if theuser.foaf_file|IN:internal_relations.worksWith %} selected="selected"{% endif %}>{{ theuser.name }}</option>
+      {% endif %}
+    {% endfor %}
+    </select>
+    </td>
+    <td>
+    {% for rel in external_relations.worksWith %}
+      <div><input type="text" size="42" name="worksWith_url{{ forloop.counter }}" value="{{ rel }}" /></div>
+    {% endfor %}
+    </td>
+  </tr>
+</table>
+</div>
+<div style="float:left;margin:1em;border:1px solid #CCCCCC">
+<h3 style="text-align:center">Connais de réputation</h3>
+<table cellspacing="8" cellpadding="0">
+  <tr><th>Sélectionner</th><th>Urls de fichiers foaf</th></tr>
+  <tr>
+    <td>
+    <select multiple="multiple" size="6" name="knowsByReputation">
+    {% for theuser in users %}
+      {% if theuser.foaf_file %}
+        <option value="{{ theuser.foaf_file }}" {% if theuser.foaf_file|IN:internal_relations.knowsByReputation %} selected="selected"{% endif %}>{{ theuser.name }}</option>
+      {% endif %}
+    {% endfor %}
+    </select>
+    </td>
+    <td>
+    {% for rel in external_relations.knowsByReputation %}
+      <div><input type="text" size="42" name="knowsByReputation_url{{ forloop.counter }}" value="{{ rel }}" /></div>
+    {% endfor %}
+    </td>
+  </tr>
+</table>
+</div>
+<div style="float:left;margin:1em;border:1px solid #CCCCCC">
+<h3 style="text-align:center">A rencontré</h3>
+<table cellspacing="8" cellpadding="0">
+  <tr><th>Sélectionner</th><th>Urls de fichiers foaf</th></tr>
+  <tr>
+    <td>
+    <select multiple="multiple" size="6" name="hasMet">
+    {% for theuser in users %}
+      {% if theuser.foaf_file %}
+        <option value="{{ theuser.foaf_file }}" {% if theuser.foaf_file|IN:internal_relations.hasMet %} selected="selected"{% endif %}>{{ theuser.name }}</option>
+      {% endif %}
+    {% endfor %}
+    </select>
+    </td>
+    <td>
+    {% for rel in external_relations.hasMet %}
+      <div><input type="text" size="42" name="hasMet_url{{ forloop.counter }}" value="{{ rel }}" /></div>
+    {% endfor %}
+    </td>
+  </tr>
+</table>
+</div>
+<div style="float:left;margin:1em;border:1px solid #CCCCCC">
+<h3 style="text-align:center">Aimerais connaitre</h3>
+<table cellspacing="8" cellpadding="0">
+  <tr><th>Sélectionner</th><th>Urls de fichiers foaf</th></tr>
+  <tr>
+    <td>
+    <select multiple="multiple" size="6" name="wouldLikeToKnow">
+    {% for theuser in users %}
+      {% if theuser.foaf_file %}
+        <option value="{{ theuser.foaf_file }}" {% if theuser.foaf_file|IN:internal_relations.wouldLikeToKnow %} selected="selected"{% endif %}>{{ theuser.name }}</option>
+      {% endif %}
+    {% endfor %}
+    </select>
+    </td>
+    <td>
+    {% for rel in external_relations.wouldLikeToKnow %}
+      <div><input type="text" size="42" name="wouldLikeToKnow_url{{ forloop.counter }}" value="{{ rel }}" /></div>
+    {% endfor %}
+    </td>
+  </tr>
+</table>
+</div>
+<p style="clear:left"><input type="submit" value="Enregistrer" /></p>
+</form>
+{% endblock %}
